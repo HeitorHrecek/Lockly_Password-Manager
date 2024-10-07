@@ -1,18 +1,33 @@
 package com.example.lockly.dataproviderLayer;
 
 import com.example.lockly.domainLayer.Folder;
-import com.example.lockly.mapper.FolderMapper;
-import com.example.lockly.repositoryLayer.password.FolderRepository;
+import com.example.lockly.repositoryLayer.FolderRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
+@Component
 public class FolderDataProvider {
+
     private final FolderRepository repository;
 
+    public Folder save(Folder folder) {
+        return repository.save(folder);
+    }
 
-    public Folder consultById(Integer id) {
-        return FolderMapper.forDomain(repository.findById(id).get());
+    public List<Folder> consultAllByUser(Long idUser) {
+        return repository.consultAllByUser(idUser);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Optional<Folder> consultById(Long id) {
+        return repository.findById(id);
     }
 }
